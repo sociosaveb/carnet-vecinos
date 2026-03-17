@@ -4,29 +4,43 @@
   <meta charset="UTF-8">
   <title>Verificación Socio</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-    h1 { font-size: 2em; }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+    h1 { font-size: 5em; margin: 0; text-align: center; }
   </style>
 </head>
 <body>
-  <h1>Cargando...</h1>
+  <h1 id="mensaje">Cargando...</h1>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const socio = urlParams.get('socio');
+    const mensaje = document.getElementById('mensaje');
 
-    fetch('https://raw.githubusercontent.com/sociosaveb/carnet-vecinos/main/socios.json')
+    // Fetch con parámetro anti-caché
+    fetch('socios.json?v=' + new Date().getTime())
       .then(res => res.json())
       .then(data => {
         if (!socio || !data[socio]) {
-          document.body.innerHTML = "<h1>⚠️ Socio no encontrado</h1>";
+          mensaje.textContent = "⚠️ Socio no encontrado";
+          mensaje.style.color = "orange";
         } else if (data[socio] === "ACTIVO") {
-          document.body.innerHTML = "<h1 style='color:green'>✅ SOCIO ACTIVO</h1>";
+          mensaje.textContent = "✅ SOCIO ACTIVO";
+          mensaje.style.color = "green";
         } else {
-          document.body.innerHTML = "<h1 style='color:red'>❌ SOCIO NO VIGENTE</h1>";
+          mensaje.textContent = "❌ SOCIO NO VIGENTE";
+          mensaje.style.color = "red";
         }
       })
       .catch(err => {
-        document.body.innerHTML = "<h1>⚠️ Error al cargar datos</h1>";
+        mensaje.textContent = "⚠️ Error al cargar datos";
+        mensaje.style.color = "orange";
         console.error(err);
       });
   </script>
