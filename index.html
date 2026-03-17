@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Verificación Socio</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+    h1 { font-size: 2em; }
+  </style>
+</head>
+<body>
+  <h1>Cargando...</h1>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const socio = urlParams.get('socio');
+
+    fetch('https://raw.githubusercontent.com/sociosaveb/carnet-vecinos/main/socios.json')
+      .then(res => res.json())
+      .then(data => {
+        if (!socio || !data[socio]) {
+          document.body.innerHTML = "<h1>⚠️ Socio no encontrado</h1>";
+        } else if (data[socio] === "ACTIVO") {
+          document.body.innerHTML = "<h1 style='color:green'>✅ SOCIO ACTIVO</h1>";
+        } else {
+          document.body.innerHTML = "<h1 style='color:red'>❌ SOCIO NO VIGENTE</h1>";
+        }
+      })
+      .catch(err => {
+        document.body.innerHTML = "<h1>⚠️ Error al cargar datos</h1>";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
