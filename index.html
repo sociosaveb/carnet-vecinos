@@ -24,7 +24,7 @@
     const mensaje = document.getElementById('mensaje');
 
     // Fetch con parámetro anti-caché
-    fetch('socios.json?v=' + new Date().getTime())
+    fetch('socios.json' + new Date().getTime())
       .then(res => res.json())
       .then(data => {
         if (!socio || !data[socio]) {
