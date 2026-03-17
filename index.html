@@ -1,48 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Verificación Socio</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f5f5f5;
-    }
-    h1 { font-size: 5em; margin: 0; text-align: center; }
-  </style>
+<meta charset="UTF-8">
+<title>Verificación Socio</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f5f5f5;
+}
+h1 { font-size: 5em; margin: 0; text-align: center; }
+</style>
 </head>
 <body>
-  <h1 id="mensaje">Cargando...</h1>
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const socio = urlParams.get('socio');
-    const mensaje = document.getElementById('mensaje');
+<h1 id="mensaje">Cargando...</h1>
+<script>
+// Aquí pones todos los socios directamente
+const socios = {
+  "001": "ACTIVO",
+  "002": "NO ACTIVO",
+  "003": "ACTIVO",
+  "004": "ACTIVO",
+  "005": "NO ACTIVO"
+};
 
-    // Fetch con parámetro anti-caché
-    fetch('socios.json' + new Date().getTime())
-      .then(res => res.json())
-      .then(data => {
-        if (!socio || !data[socio]) {
-          mensaje.textContent = "⚠️ Socio no encontrado";
-          mensaje.style.color = "orange";
-        } else if (data[socio] === "ACTIVO") {
-          mensaje.textContent = "✅ SOCIO ACTIVO";
-          mensaje.style.color = "green";
-        } else {
-          mensaje.textContent = "❌ SOCIO NO VIGENTE";
-          mensaje.style.color = "red";
-        }
-      })
-      .catch(err => {
-        mensaje.textContent = "⚠️ Error al cargar datos";
-        mensaje.style.color = "orange";
-        console.error(err);
-      });
-  </script>
+const urlParams = new URLSearchParams(window.location.search);
+const socio = urlParams.get('socio');
+const mensaje = document.getElementById('mensaje');
+
+if (!socio || !socios[socio]) {
+  mensaje.textContent = "⚠️ Socio no encontrado";
+  mensaje.style.color = "orange";
+} else if (socios[socio] === "ACTIVO") {
+  mensaje.textContent = "✅ SOCIO ACTIVO";
+  mensaje.style.color = "green";
+} else {
+  mensaje.textContent = "❌ SOCIO NO VIGENTE";
+  mensaje.style.color = "red";
+}
+</script>
 </body>
 </html>
