@@ -26,7 +26,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const socio = urlParams.get('socio');
 
-    fetch('https://raw.githubusercontent.com/TU-USUARIO/carnet-vecinos/main/socios.json')
+    fetch('https://raw.githubusercontent.com/sociosaveb/carnet-vecinos/main/socios.json')
       .then(res => res.json())
       .then(data => {
         if (!socio || !data[socio]) {
